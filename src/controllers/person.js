@@ -29,7 +29,10 @@ class PersonController {
     try {
       const person = req.body;
       await service.Add(person);
-      res.status(201).json({ message: 'Person added successfully!' });
+      res.status(201).json({
+        message: 'Person added successfully!',
+        person: person,
+      });
     } catch (error) {
       res.status(500).json({
         message: error.message,
@@ -43,7 +46,10 @@ class PersonController {
       let person = await service.GetById(id);
       person = req.body;
       service.Update(id, person);
-      res.status(200).json({ message: 'Person updated successfully!' });
+      res.status(200).json({
+        message: 'Person updated successfully!',
+        person: person,
+      });
     } catch (error) {
       res.status(500).json({
         message: error.message,
