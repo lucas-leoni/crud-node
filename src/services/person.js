@@ -1,9 +1,9 @@
-const ExerciceRepository = require('../repositories/person.js');
-const repository = new ExerciceRepository();
+const PersonRepository = require('../repositories/person.js');
+const repository = new PersonRepository();
 
-class ExerciceService {
-  errorMessagePerson = 'Informe todos os dados!';
-  errorMessageIndex = 'Índice inválido!';
+class PersonService {
+  errorMessagePerson = 'Provide all data!';
+  indexErrorMessage = 'Invalid index!';
 
   async GetAll() {
     return repository.GetAll();
@@ -24,17 +24,17 @@ class ExerciceService {
     if (!person) {
       throw new Error(this.errorMessagePerson);
     } else if (!id || isNaN(id)) {
-      throw new Error(this.errorMessageIndex);
+      throw new Error(this.indexErrorMessage);
     }
     repository.Update(id, person);
   }
 
   async Delete(id) {
     if (!id || isNaN(id)) {
-      throw new Error(this.errorMessageIndex);
+      throw new Error(this.indexErrorMessage);
     }
     repository.Delete(id);
   }
 }
 
-module.exports = ExerciceService;
+module.exports = PersonService;

@@ -1,11 +1,11 @@
-const ExerciceService = require('../services/person');
-const service = new ExerciceService();
+const PersonService = require('../services/person');
+const service = new PersonService();
 
-class ExerciceController {
+class PersonController {
   async GetAll(req, res) {
     try {
-      const names = await service.GetAll();
-      res.status(201).json({ names: names });
+      const people = await service.GetAll();
+      res.status(200).json(people);
     } catch (error) {
       res.status(500).json({
         message: error.message,
@@ -16,8 +16,8 @@ class ExerciceController {
   async GetById(req, res) {
     try {
       const id = req.params.id;
-      const name = await service.GetById(id);
-      res.status(200).json({ name: name });
+      const person = await service.GetById(id);
+      res.status(200).json(person);
     } catch (error) {
       res.status(500).json({
         message: error.message,
@@ -27,13 +27,9 @@ class ExerciceController {
 
   async Add(req, res) {
     try {
-      const person = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-      }
+      const person = req.body;
       await service.Add(person);
-      res.status(201).json({ message: 'Nome adicionado com sucesso!' });
+      res.status(201).json({ message: 'Person added successfully!' });
     } catch (error) {
       res.status(500).json({
         message: error.message,
@@ -45,9 +41,9 @@ class ExerciceController {
     try {
       const id = req.params.id;
       let person = await service.GetById(id);
-      person = req.body.person;
+      person = req.body;
       service.Update(id, person);
-      res.status(201).json({ message: 'Nome atualizado com sucesso!' });
+      res.status(200).json({ message: 'Person updated successfully!' });
     } catch (error) {
       res.status(500).json({
         message: error.message,
@@ -59,7 +55,7 @@ class ExerciceController {
     try {
       const id = req.params.id;
       await service.Delete(id);
-      res.status(201).json({ message: 'Nome excluído com sucesso!' });
+      res.status(200).json({ message: 'Person deleted successfully!' });
     } catch (error) {
       res.status(500).json({
         message: error.message,
@@ -68,4 +64,4 @@ class ExerciceController {
   }
 }
 
-module.exports = ExerciceController;
+module.exports = PersonController;

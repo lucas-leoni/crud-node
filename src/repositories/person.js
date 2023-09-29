@@ -1,30 +1,31 @@
-const names = new Array('Lucas', 'Alexandre', 'Joni');
-const Pessoa = require('../models/person.js');
+const Person = require('../models/person.js');
 
-class ExerciceRepository {
+class PersonRepository {
   async GetAll() {
-    return await Pessoa.findAll();
+    return await Person.findAll();
   }
 
   async GetById(id) {
-    return await Pessoa.findOne({
+    return await Person.findOne({
       where: { id },
     });
   }
 
   async Add(person) {
-    await Pessoa.create(person);
+    await Person.create(person);
   }
 
   async Update(id, person) {
-    await Pessoa.update(person, {
+    await Person.update(person, {
       where: { id },
     });
   }
 
   async Delete(id) {
-    names.splice(id, 1);
+    await Person.destroy({
+      where: { id },
+    });
   }
 }
 
-module.exports = ExerciceRepository;
+module.exports = PersonRepository;

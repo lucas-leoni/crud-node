@@ -1,13 +1,13 @@
 const express = require('express');
-const ExerciceController = require('../controllers/person');
+const PersonController = require('../controllers/person');
 
-const controller = new ExerciceController();
+const controller = new PersonController();
 const router = express.Router();
 
-router.get('/api/names', controller.GetAll);
-router.get('/api/name/:id', controller.GetById);
-router.post('/api/name', controller.Add);
-router.put('/api/name/:id', controller.Update);
-router.delete('/api/name/:id', controller.Delete);
+router.get('/api/people', controller.GetAll);
+router.get('/api/person/:id', controller.GetById);
+router.post('/api/person', controller.Add);
+router.put('/api/person/:id', controller.Update);
+router.delete('/api/person/:id', controller.Delete);
 
 module.exports = router;
