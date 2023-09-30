@@ -45,7 +45,7 @@ class PersonController {
       const id = req.params.id;
       let person = await service.GetById(id);
       person = req.body;
-      service.Update(id, person);
+      await service.Update(id, person);
       res.status(200).json({
         message: 'Person updated successfully!',
         person: person,
@@ -61,7 +61,9 @@ class PersonController {
     try {
       const id = req.params.id;
       await service.Delete(id);
-      res.status(200).json({ message: 'Person deleted successfully!' });
+      res.status(200).json({
+        message: 'Person deleted successfully!',
+      });
     } catch (error) {
       res.status(500).json({
         message: error.message,

@@ -6,6 +6,6 @@ const conection = new Sequelize(development);
 conection
   .sync()
   .then(() => console.log('\nConnected to database successfully!'))
-  .catch((error) => console.log('\nCould not connect to database.!\n', error));
+  .catch((error) => console.log('\nCould not connect to database!\n\n', error));
 
 module.exports = conection;
