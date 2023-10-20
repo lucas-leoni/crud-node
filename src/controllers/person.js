@@ -1,4 +1,8 @@
 const PersonService = require('../services/person');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
+
 const service = new PersonService();
 
 class PersonController {
@@ -64,6 +68,41 @@ class PersonController {
       res.status(200).json({
         message: 'Person deleted successfully!',
       });
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async Login(req, res) {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+      }
+
+      const { dataValues: person } = await service.GetByEmail(email);
+
+      if (!person) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+      }
+
+      if (!(await bcrypt.compare(password, person.password))) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+      }
+
+      const token = jwt.sign(
+        {
+          id: person.id,
+          email: person.email,
+          name: person.name,
+        },
+        config.secret
+      );
+
+      res.json({ token });
     } catch (error) {
       res.status(500).json({
         message: error.message,

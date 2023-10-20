@@ -1,11 +1,12 @@
-const DataTypes = require('sequelize');
-const Sequelize = require('../database.js');
+const { DataTypes } = require('sequelize');
+const Conection = require('../database.js');
 
-const Pessoa = Sequelize.define(
+const Person = Conection.define(
   'pessoas',
   {
     id: {
       primaryKey: true,
+      autoIncrement: true,
       type: DataTypes.INTEGER,
     },
     name: {
@@ -28,4 +29,4 @@ const Pessoa = Sequelize.define(
   }
 );
 
-module.exports = Pessoa;
+module.exports = Person;

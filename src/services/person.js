@@ -35,6 +35,10 @@ class PersonService {
     }
     repository.Delete(id);
   }
+
+  async GetByEmail(email) {
+    return repository.GetByEmail(email);
+  }
 }
 
 module.exports = PersonService;

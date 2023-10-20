@@ -1,4 +1,5 @@
 const Person = require('../models/person.js');
+const bcrypt = require('bcrypt');
 
 class PersonRepository {
   async GetAll() {
@@ -11,19 +12,34 @@ class PersonRepository {
     });
   }
 
-  async Add(person) {
-    await Person.create(person);
+  async Add(person, transaction) {
+    const passwordHash = await bcrypt.hash(person.password, 10);
+    person.password = passwordHash;
+    const result = await Person.create(person, { transaction });
+
+    return result;
   }
 
-  async Update(id, person) {
-    await Person.update(person, {
+  async Update(id, person, transaction) {
+    const passwordHash = await bcrypt.hash(person.password, 10);
+    person.password = passwordHash;
+    const result = await Person.update(person, {
+      transaction,
       where: { id },
     });
+
+    return result;
   }
 
   async Delete(id) {
     await Person.destroy({
       where: { id },
+    });
+  }
+
+  async GetByEmail(email) {
+    return Person.findOne({
+      where: { email },
     });
   }
 }
